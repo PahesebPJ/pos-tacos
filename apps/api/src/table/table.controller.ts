@@ -3,9 +3,10 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
+  Put,
+  Query,
 } from '@nestjs/common';
 
 import { TableService } from './table.service';
@@ -22,8 +23,8 @@ export class TableController {
   }
 
   @Get()
-  findAll() {
-    return this.tableService.findAll();
+  findAll(@Query('order') order: 'ASC' | 'DESC') {
+    return this.tableService.findAll(order);
   }
 
   @Get(':id')
@@ -31,13 +32,13 @@ export class TableController {
     return this.tableService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateTableDto: UpdateTableDto) {
     return this.tableService.update(+id, updateTableDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.tableService.remove(+id);
+  delete(@Param('id') id: string) {
+    return this.tableService.delete(+id);
   }
 }
