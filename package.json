@@ -24,6 +24,7 @@
   ],
   "dependencies": {
     "@nestjs/class-validator": "^0.13.1",
+    "@nestjs/mapped-types": "*",
     "zod": "^3.24.2"
   }
 }
