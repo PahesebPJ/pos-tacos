@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateTableDto } from './dto/create-table.dto';
 import { UpdateTableDto } from './dto/update-table.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,62 +13,22 @@ export class TableService {
   ) {}
 
   create(createTableDto: CreateTableDto) {
-    const newTable = this.tableRepository.create(createTableDto);
-
-    return this.tableRepository.save(newTable);
+    return this.tableRepository.create(createTableDto);
   }
 
-  async findAll(order: 'ASC' | 'DESC') {
-    const tableFound = await this.tableRepository.find({
-      order: {
-        id: order,
-      },
-    });
-
-    if (!tableFound) {
-      return new HttpException('Tables not found', HttpStatus.NOT_FOUND);
-    }
-
-    return tableFound;
+  async findAll() {
+    return await this.tableRepository.find();
   }
 
-  async findOne(id: number) {
-    const tableFound = await this.tableRepository.findOne({
-      where: {
-        id,
-      },
-    });
-
-    if (!tableFound) {
-      return new HttpException('Table not found', HttpStatus.NOT_FOUND);
-    }
-
-    return tableFound;
+  findOne(id: number) {
+    return 'sads';
   }
 
-  async update(id: number, updateTableDto: UpdateTableDto) {
-    const tableFound = await this.tableRepository.findOne({ where: { id } });
-
-    if (!tableFound) {
-      return new HttpException(
-        'The table could not be updated, because it does not exist',
-        HttpStatus.NOT_FOUND,
-      );
-    }
-
-    return this.tableRepository.update(id, updateTableDto);
+  update(id: number, updateTableDto: UpdateTableDto) {
+    return `This action updates a #${id} table`;
   }
 
-  async delete(id: number) {
-    const rowAffected = await this.tableRepository.delete(id);
-
-    if (rowAffected.affected === 0) {
-      return new HttpException(
-        'The table could not be deleted, because it does not exist',
-        HttpStatus.NOT_FOUND,
-      );
-    }
-
-    return rowAffected;
+  remove(id: number) {
+    return `This action removes a #${id} table`;
   }
 }
