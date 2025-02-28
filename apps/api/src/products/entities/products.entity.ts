@@ -1,13 +1,22 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
-export class Table {
+export class Products {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   name: string;
 
-  @Column({ default: 0 })
-  status: number;
+  @Column()
+  price: number;
+
+  @Column()
+  description: string;
+
+  @Column()
+  type: string;
+
+  @Column()
+  url: string;
 }
