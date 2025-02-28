@@ -9,11 +9,11 @@ import {
   Query,
 } from '@nestjs/common';
 
-import { TableService } from './table.service';
+import { TableService } from './tables.service';
 import { CreateTableDto } from './dto/create-table.dto';
 import { UpdateTableDto } from './dto/update-table.dto';
 
-@Controller('table')
+@Controller('tables')
 export class TableController {
   constructor(private readonly tableService: TableService) {}
 

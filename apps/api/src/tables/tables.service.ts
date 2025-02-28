@@ -2,14 +2,14 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { CreateTableDto } from './dto/create-table.dto';
 import { UpdateTableDto } from './dto/update-table.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Table } from './entities/table.entity';
+import { Tables } from './entities/tables.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class TableService {
   constructor(
-    @InjectRepository(Table)
-    private readonly tableRepository: Repository<Table>,
+    @InjectRepository(Tables)
+    private readonly tableRepository: Repository<Tables>,
   ) {}
 
   create(createTableDto: CreateTableDto) {
