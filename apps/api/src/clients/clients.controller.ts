@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ClientsService } from './clients.service';
 import { Clients } from './entities/clients.entity';
@@ -17,8 +18,8 @@ export class ClientsController {
   constructor(private readonly clientsService: ClientsService) {}
 
   @Get()
-  findAll(): Promise<Clients[]> {
-    return this.clientsService.findAll();
+  findAll(@Query('order') order: 'ASC' | 'DESC'): Promise<Clients[]> {
+    return this.clientsService.findAll(order);
   }
 
   @Get(':id')
@@ -27,7 +28,7 @@ export class ClientsController {
   }
 
   @Post()
-  create(@Body() client: Clients) {
+  create(@Body() client: CreateClientDto) {
     return this.clientsService.create(client);
   }
 

@@ -8,7 +8,7 @@ export class Products {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ nullable: true })
   price: number;
 
   @Column()
