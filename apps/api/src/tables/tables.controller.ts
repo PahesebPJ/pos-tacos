@@ -7,11 +7,12 @@ import {
   Delete,
   Put,
   Query,
+  HttpException,
 } from '@nestjs/common';
-
 import { TablesService } from './tables.service';
 import { CreateTableDto } from './dto/create-table.dto';
 import { UpdateTableDto } from './dto/update-table.dto';
+import { Tables } from './entities/tables.entity';
 
 @Controller('tables')
 export class TableController {
@@ -28,7 +29,7 @@ export class TableController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<Tables | HttpException> {
     return this.TablesService.findOne(+id);
   }
 

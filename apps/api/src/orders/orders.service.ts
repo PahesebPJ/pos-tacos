@@ -21,24 +21,22 @@ export class OrdersService {
   }
 
   async create(createOrderDto: CreateOrderDto) {
-    const tableFound = await this.tablesService.findOne(
-      createOrderDto.tablesId,
-    );
+    const table = await this.tablesService.findOne(createOrderDto.tablesId);
 
-    const clientFound = await this.clientsService.findOne(
-      createOrderDto.clientsId,
-    );
+    const clients = await this.clientsService.findOne(createOrderDto.clientsId);
 
-    if (this.isHttpException(tableFound) || this.isHttpException(clientFound)) {
+    if (this.isHttpException(table) || this.isHttpException(clients)) {
       return new HttpException(
         'Table or Client not found',
         HttpStatus.NOT_FOUND,
       );
     }
 
-    const newOrder = this.ordersRepository.create(createOrderDto);
-
-    return this.ordersRepository.save(newOrder);
+    return this.ordersRepository.save({
+      ...createOrderDto,
+      clients,
+      table,
+    });
   }
 
   async findAll() {

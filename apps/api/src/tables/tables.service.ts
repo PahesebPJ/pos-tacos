@@ -32,12 +32,8 @@ export class TablesService {
     return tableFound;
   }
 
-  async findOne(id: number) {
-    const tableFound = await this.tableRepository.findOne({
-      where: {
-        id,
-      },
-    });
+  async findOne(id: number): Promise<Tables | HttpException> {
+    const tableFound = await this.tableRepository.findOneBy({ id });
 
     if (!tableFound) {
       return new HttpException('Table not found', HttpStatus.NOT_FOUND);

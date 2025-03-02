@@ -20,9 +20,6 @@ export class OrdersController {
   @Post()
   @UsePipes(new ValidationPipe())
   create(@Body() createOrderDto: CreateOrderDto) {
-    /* console.log(createOrderDto);
-    return; */
-
     return this.ordersService.create(createOrderDto);
   }
 
