@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Clients } from './entities/clients.entity';
 import { Repository } from 'typeorm';
@@ -15,8 +15,14 @@ export class ClientsService {
     return this.clientsRepository.find();
   }
 
-  async findOne(id: number): Promise<Clients | null> {
-    return this.clientsRepository.findOneBy({ id });
+  async findOne(id: number): Promise<Clients | HttpException> {
+    const clientFound = await this.clientsRepository.findOneBy({ id });
+
+    if (!clientFound) {
+      return new HttpException('Client not found', 404);
+    }
+
+    return clientFound;
   }
 
   create(createClientDto: CreateClientDto) {

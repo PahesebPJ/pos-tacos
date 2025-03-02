@@ -6,7 +6,7 @@ import { Tables } from './entities/tables.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class TableService {
+export class TablesService {
   constructor(
     @InjectRepository(Tables)
     private readonly tableRepository: Repository<Tables>,
