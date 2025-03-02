@@ -1,0 +1,81 @@
+.login__form__container {
+  backdrop-filter: blur(12px); /* backdrop-blur-xl */
+  background-color: rgba(0, 0, 0, 0.3); /* bg-black/30 */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* border border-white/10 */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); /* shadow-2xl */
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fdfffc;
+  width: 25%;
+  height: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 0.9rem;
+}
+
+.login__form__container__title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login__form__container__subtitle {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.custom-input {
+  width: 80%; /* w-full */
+  padding: 0.5rem 0.75rem; /* px-3 py-2 */
+  background-color: rgba(255, 255, 255, 0.1); /* bg-white/10 */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* border border-white/20 */
+  border-radius: 0.5rem; /* rounded-lg */
+  color: white; /* text-white */
+  outline: none; /* focus:outline-none */
+}
+
+.custom-input::placeholder {
+  color: rgba(255, 255, 255, 0.5); /* placeholder-white/50 */
+}
+
+.custom-input:focus {
+  border-color: transparent; /* focus:border-transparent */
+  box-shadow: 0 0 0 2px #ff7a00; /* focus:ring-2 focus:ring-orange-500 */
+}
+
+.custom-label {
+  display: block; /* block */
+  margin-top: 10px;
+  font-size: 0.875rem; /* text-sm (14px) */
+  font-weight: 500; /* font-medium */
+  color: white; /* text-white */
+  margin-bottom: 0.5rem; /* mb-2 */
+}
+
+.login__form__button {
+  width: 40%;
+  background-color: #f97316;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+  margin-top: 25px;
+  border: 0;
+}
+
+.login__form__button:hover {
+  background-color: #c09571;
+  cursor: pointer;
+}
