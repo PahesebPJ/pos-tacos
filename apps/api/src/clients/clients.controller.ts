@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
   Param,
   Post,
   Put,
@@ -21,7 +22,7 @@ export class ClientsController {
   }
 
   @Get(':id')
-  findOneById(@Param('id') id: number): Promise<Clients | null> {
+  findOneById(@Param('id') id: number): Promise<Clients | HttpException> {
     return this.clientsService.findOne(+id);
   }
 
