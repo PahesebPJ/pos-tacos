@@ -1,11 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Orders } from './entities/orders.entity';
 import { TablesService } from 'src/tables/tables.service';
 import { ClientsService } from 'src/clients/clients.service';
+import { Tables } from 'src/tables/entities/tables.entity';
 
 @Injectable()
 export class OrdersService {
@@ -21,11 +21,11 @@ export class OrdersService {
   }
 
   async create(createOrderDto: CreateOrderDto) {
-    const table = await this.tablesService.findOne(createOrderDto.tablesId);
+    const tables = await this.tablesService.findOne(createOrderDto.tablesId);
 
     const clients = await this.clientsService.findOne(createOrderDto.clientsId);
 
-    if (this.isHttpException(table) || this.isHttpException(clients)) {
+    if (this.isHttpException(tables) || this.isHttpException(clients)) {
       return new HttpException(
         'Table or Client not found',
         HttpStatus.NOT_FOUND,
@@ -34,14 +34,15 @@ export class OrdersService {
 
     return this.ordersRepository.save({
       ...createOrderDto,
+      tables: tables as Tables,
       clients,
-      table,
     });
   }
 
-  async findAll() {
+  async findAll(order: 'ASC' | 'DESC') {
     const ordersFound = await this.ordersRepository.find({
       relations: ['tables', 'clients'],
+      order: { id: order },
     });
 
     if (!ordersFound) {
@@ -52,7 +53,10 @@ export class OrdersService {
   }
 
   async findOne(id: number) {
-    const orderFound = await this.ordersRepository.findOne({ where: { id } });
+    const orderFound = await this.ordersRepository.findOne({
+      where: { id },
+      relations: ['tables', 'clients'],
+    });
 
     if (!orderFound) {
       return new HttpException('Order not found', HttpStatus.NOT_FOUND);
@@ -61,8 +65,10 @@ export class OrdersService {
     return orderFound;
   }
 
-  async update(id: number, updateOrderDto: UpdateOrderDto) {
+  async update(id: number, updateOrderDto: CreateOrderDto) {
     const orderFound = await this.ordersRepository.findOne({ where: { id } });
+    const tables = await this.tablesService.findOne(updateOrderDto.tablesId);
+    const clients = await this.clientsService.findOne(updateOrderDto.clientsId);
 
     if (!orderFound) {
       return new HttpException(
@@ -71,7 +77,20 @@ export class OrdersService {
       );
     }
 
-    return this.ordersRepository.update(id, updateOrderDto);
+    if (this.isHttpException(tables) || this.isHttpException(clients)) {
+      return new HttpException(
+        'Table or Client not found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    return this.ordersRepository.update(id, {
+      ...orderFound,
+      status: updateOrderDto.status,
+      total: updateOrderDto.total,
+      tables: tables as Tables,
+      clients,
+    });
   }
 
   async delete(id: number) {

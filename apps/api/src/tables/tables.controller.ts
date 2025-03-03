@@ -29,7 +29,7 @@ export class TableController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Tables | HttpException> {
+  findOne(@Param('id') id: number): Promise<Tables | HttpException> {
     return this.TablesService.findOne(+id);
   }
 

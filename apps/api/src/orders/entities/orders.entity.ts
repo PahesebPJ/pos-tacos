@@ -23,8 +23,8 @@ export class Orders {
   @Column()
   total: number;
 
-  @ManyToOne(() => Tables, (table) => table.orders)
   @JoinColumn({ name: 'table_id' })
+  @ManyToOne(() => Tables, (table) => table.orders)
   tables: Tables;
 
   @JoinColumn({ name: 'client_id' })

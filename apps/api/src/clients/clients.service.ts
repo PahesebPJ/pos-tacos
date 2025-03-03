@@ -11,8 +11,8 @@ export class ClientsService {
     private readonly clientsRepository: Repository<Clients>,
   ) {}
 
-  async findAll(): Promise<Clients[]> {
-    return this.clientsRepository.find();
+  async findAll(order: 'ASC' | 'DESC'): Promise<Clients[]> {
+    return this.clientsRepository.find({ order: { id: order } });
   }
 
   async findOne(id: number): Promise<Clients | HttpException> {

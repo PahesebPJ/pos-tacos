@@ -1,9 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Products } from './entities/products.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreateProductRequestDto } from './dto/create-product-request.dto';
 
 @Injectable()
 export class ProductsService {
@@ -12,14 +12,21 @@ export class ProductsService {
     private readonly productRepository: Repository<Products>,
   ) {}
 
-  create(createProductDto: CreateProductDto): Promise<Products> {
+  create(
+    createProductDto: CreateProductRequestDto & { url?: string },
+  ): Promise<Products> {
     const newProduct = this.productRepository.create(createProductDto);
 
-    return this.productRepository.save(newProduct);
+    return this.productRepository.save({
+      ...newProduct,
+      url: createProductDto.url,
+    });
   }
 
-  async findAll() {
-    const productsFound = await this.productRepository.find();
+  async findAll(order: 'ASC' | 'DESC') {
+    const productsFound = await this.productRepository.find({
+      order: { id: order },
+    });
 
     if (!productsFound) {
       return new HttpException('Tables not found', HttpStatus.NOT_FOUND);
