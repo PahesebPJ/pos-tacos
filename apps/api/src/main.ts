@@ -4,6 +4,7 @@ import { join } from 'path';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as serveStatic from 'serve-static';
 import { ValidationPipe } from '@nestjs/common';
+import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -16,6 +17,15 @@ async function bootstrap() {
       transform: true,
     }),
   );
+
+  const corsOptions: CorsOptions = {
+    origin: ['http://localhost:3000', 'http://localhost:4200'], // Añade aquí los dominios permitidos
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+  };
+
+  app.enableCors(corsOptions);
 
   await app.listen(process.env.PORT ?? 5000);
 }
