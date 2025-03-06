@@ -1,25 +1,32 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Product } from './entities/product.entity';
+import { Products } from './entities/products.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreateProductRequestDto } from './dto/create-product-request.dto';
 
 @Injectable()
 export class ProductsService {
   constructor(
-    @InjectRepository(Product)
-    private readonly productRepository: Repository<Product>,
+    @InjectRepository(Products)
+    private readonly productRepository: Repository<Products>,
   ) {}
 
-  create(createProductDto: CreateProductDto): Promise<Product> {
+  create(
+    createProductDto: CreateProductRequestDto & { url?: string },
+  ): Promise<Products> {
     const newProduct = this.productRepository.create(createProductDto);
 
-    return this.productRepository.save(newProduct);
+    return this.productRepository.save({
+      ...newProduct,
+      url: createProductDto.url,
+    });
   }
 
-  async findAll() {
-    const productsFound = await this.productRepository.find();
+  async findAll(order: 'ASC' | 'DESC') {
+    const productsFound = await this.productRepository.find({
+      order: { id: order },
+    });
 
     if (!productsFound) {
       return new HttpException('Tables not found', HttpStatus.NOT_FOUND);
@@ -59,8 +66,21 @@ export class ProductsService {
         HttpStatus.NOT_FOUND,
       );
     }
+    const existedPic = productFound.url.split('/')[0];
+    const newPic = updateProductDto.url;
 
-    return this.productRepository.update(id, updateProductDto);
+    let updatedProductDto = {
+      ...updateProductDto,
+    };
+
+    if (existedPic.toLocaleLowerCase() !== newPic?.toLocaleLowerCase()) {
+      updatedProductDto = {
+        ...productFound,
+        url: newPic,
+      };
+    }
+
+    return this.productRepository.update(id, updatedProductDto);
   }
 
   async delete(id: number) {

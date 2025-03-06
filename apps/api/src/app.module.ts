@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TableModule } from './table/table.module';
+import { TablesModule } from './tables/tables.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { connection } from './connection';
 import { ProductsModule } from './products/products.module';
+import { ClientsModule } from './clients/clients.module';
+import { OrdersModule } from './orders/orders.module';
+import { OrdersProductsController } from './orders_products/orders_products.controller';
+import { OrdersProductsModule } from './orders_products/orders_products.module';
 
 @Module({
   imports: [
@@ -20,12 +24,15 @@ import { ProductsModule } from './products/products.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    TableModule,
+    TablesModule,
     UsersModule,
     AuthModule,
     ProductsModule,
+    ClientsModule,
+    OrdersModule,
+    OrdersProductsModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, OrdersProductsController],
   providers: [AppService],
 })
 export class AppModule {}
