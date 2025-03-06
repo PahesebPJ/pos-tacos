@@ -6,7 +6,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="container-layout" id="root">
+        <div className="container-layout">
             <NavBar />
             {children}
         </div>

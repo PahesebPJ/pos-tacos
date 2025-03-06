@@ -3,7 +3,7 @@ import modalStyle from '../styles/modal.module.css';
 
 interface propsModal {
     children?: React.ReactNode;
-    open: boolean | undefined;
+    open: boolean;
 }
 
 const Modal = ({ open, children }: propsModal) => {
@@ -13,7 +13,7 @@ const Modal = ({ open, children }: propsModal) => {
 
     return ReactDOM.createPortal(
         <div
-            className={`${open ? modalStyle.modal_container : modalStyle.modal_container_close}`}
+            className={`${modalStyle.modal_container} ${open ? modalStyle.modal_container_open : ''}`}
         >
             {children}
         </div>,

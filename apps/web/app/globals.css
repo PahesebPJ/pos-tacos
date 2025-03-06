@@ -1,7 +1,7 @@
 :root {
-    --primarycolor: #ffffff;
-    --secondarycolor: #d87a22;
-    --accentcolor: #19a051;
+    --primaryColor: #ffffff;
+    --secondaryColor: #d87a22;
+    --accentColor: #19a051;
 }
 
 html,
@@ -27,4 +27,8 @@ a {
     display: grid;
     grid-template-rows: auto 1fr;
     height: 100dvh;
+}
+
+.absolute-modal {
+    position: absolute;
 }

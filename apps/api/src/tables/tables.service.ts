@@ -52,7 +52,11 @@ export class TablesService {
       );
     }
 
-    return this.tableRepository.update(id, updateTableDto);
+    this.tableRepository.update(id, updateTableDto);
+
+    const updatedTable = await this.tableRepository.findOne({ where: { id } });
+
+    return updatedTable;
   }
 
   async delete(id: number) {

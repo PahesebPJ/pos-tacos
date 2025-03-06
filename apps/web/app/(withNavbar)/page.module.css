@@ -2,11 +2,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
 }
 
 .main__title {
-    padding-top: 15px;
+    padding-top: 25px;
     color: #333;
     font-size: 1.7rem;
 }
