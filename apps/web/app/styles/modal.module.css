@@ -1,19 +1,19 @@
 .modal_container {
     position: fixed;
-    opacity: 1;
-    inset: 0;
-    margin: auto;
+    opacity: 0;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(3px);
-    background-color: rgb(0 0 0 / 0.5);
-    z-index: 999;
+    z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
+    pointer-events: none;
     transition: all 0.3s ease;
 }
 
-.modal_container_close {
-    opacity: 0;
+.modal_container_open {
+    backdrop-filter: blur(8px);
+    background-color: rgb(0 0 0 / 0.5);
+    opacity: 1;
+    pointer-events: initial;
 }
