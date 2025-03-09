@@ -6,16 +6,25 @@ import { usePathname } from 'next/navigation';
 import {
     AiOutlineAppstoreAdd,
     AiOutlineBarChart,
+    AiOutlineForm,
     AiOutlineHome,
-    AiOutlineSetting,
 } from 'react-icons/ai';
+import Image from 'next/image';
 
 const NavBar = () => {
     const pathName = usePathname();
 
     return (
         <nav className={styles.navbar}>
-            <span className={styles.navbar__logo}>Buisness Logo</span>
+            <div className={styles.navbar__logo}>
+                <Image
+                    className={styles.img}
+                    src="/Logo-tacos.png"
+                    alt="Logo de la taqueria"
+                    width={500}
+                    height={500}
+                />
+            </div>
             <ul className={styles.ul}>
                 <li>
                     <Link
@@ -54,12 +63,12 @@ const NavBar = () => {
                 </li>
                 <li>
                     <Link
-                        href="/config"
-                        className={`${styles.ul__item} ${pathName === '/config' ? styles.ul__item_active : ''}`}
+                        href="/inventory"
+                        className={`${styles.ul__item} ${pathName === '/inventory' ? styles.ul__item_active : ''}`}
                     >
-                        <AiOutlineSetting /> Configuración
+                        <AiOutlineForm /> Inventario
                         <div
-                            className={`${styles.bar} ${pathName === '/config' ? styles.bar_active : ''}`}
+                            className={`${styles.bar} ${pathName === '/inventory' ? styles.bar_active : ''}`}
                         ></div>
                     </Link>
                 </li>
