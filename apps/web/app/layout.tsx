@@ -22,9 +22,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
+        <html lang="es">
             <body className={`${geistSans.variable} ${geistMono.variable}`}>
                 <div className="absolute-modal" id="root"></div>
+                <div className="absolute-modal" id="popup"></div>
                 {children}
             </body>
         </html>
