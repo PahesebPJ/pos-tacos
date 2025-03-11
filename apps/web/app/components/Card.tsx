@@ -6,32 +6,44 @@ interface propCard {
     children?: React.ReactNode;
     title?: string;
     isActiveModal?: boolean;
-    close: (e: React.MouseEvent) => void;
+    className?: string;
+    close?: (e: React.MouseEvent) => void;
 }
 
-const Card = ({ children, close, title, isActiveModal }: propCard) => {
+const Card = ({
+    children,
+    title,
+    close,
+    isActiveModal,
+    className,
+}: propCard) => {
     if (isActiveModal === undefined) {
         return (
-            <div className={cardStyle.card_container}>
+            <div className={`${cardStyle.card_container}`}>
                 <header className={cardStyle.card_header}>
-                    <h1 className={cardStyle.title}>{title}</h1>
+                    <h1 className={`${cardStyle.title} ${className || ''}`}>
+                        {title}
+                    </h1>
                 </header>
-                {children}
+                <div className={`${className || ''}`}>{children}</div>
             </div>
         );
     }
 
     return (
         <div
-            className={`${cardStyle.card_container} ${cardStyle.card_container_close} ${isActiveModal ? cardStyle.card_container_open : ''}`}
+            className={`${cardStyle.card_container} ${cardStyle.card_container_close} 
+            ${isActiveModal ? cardStyle.card_container_open : ''}`}
         >
             <header className={cardStyle.card_header}>
-                <h1 className={cardStyle.title}>{title}</h1>
+                <h1 className={`${cardStyle.title} ${className || ''}`}>
+                    {title}
+                </h1>
                 <button onClick={close} className={cardStyle.button_close}>
                     <FaXmark />
                 </button>
             </header>
-            {children}
+            <div className={`${className || ''}`}>{children}</div>
         </div>
     );
 };

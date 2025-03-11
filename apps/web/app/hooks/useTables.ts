@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getApiCall, apiURL } from '@/app/service/api_calls';
 import api_routes from '@/app/service/api_routes';
 
@@ -11,7 +11,6 @@ interface tableInterface {
 const useTables = () => {
     const [tables, setTables] = useState<tableInterface[]>([]);
     const [loading, setLoading] = useState(false);
-    const [cosa, setCosa] = useState(false);
 
     const setApiTables = async () => {
         setLoading(true);
@@ -22,8 +21,6 @@ const useTables = () => {
             );
 
             setTables(dataTables);
-
-            console.log('Datos iniciales de tables:', dataTables);
         } catch (error) {
             console.error('Error al obtener datos iniciales:', error);
         } finally {
@@ -33,34 +30,75 @@ const useTables = () => {
 
     useEffect(() => {
         setApiTables();
-        console.log('Renderizando el useEffect');
-    }, [cosa]);
+    }, []);
 
-    const updateTable = async (id: number, newTable: tableInterface) => {
+    const updateTable = async (id: number, tableUpdated: tableInterface) => {
         try {
             await getApiCall(`${apiURL}${api_routes.tables}/${id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(newTable),
+                body: JSON.stringify(tableUpdated),
             });
 
             setTables((prevTables) =>
                 prevTables.map((table) =>
-                    table.id === id ? { ...table, ...newTable } : table
+                    table.id === id ? { ...table, ...tableUpdated } : table
                 )
             );
-
-            setApiTables();
-            setCosa(!cosa);
-            console.log('Seteando setapiTables');
         } catch (error) {
             console.error('Error al actualizar tabla:', error);
         }
     };
 
-    return { tables, updateTable, loading };
+    /* const createTable = async (newTable: tableInterface) => {
+        try {
+            const dataNewTable = await getApiCall(
+                `${apiURL}${api_routes.tables}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newTable),
+                }
+            );
+
+            setTables((prevTables) => [
+                ...prevTables,
+                { ...newTable, id: dataNewTable.id },
+            ]);
+        } catch (error) {
+            console.error('Error al actualizar tabla:', error);
+        }
+    }; */
+    const createTable = useCallback(
+        async (newTable: tableInterface) => {
+            try {
+                const dataNewTable = await getApiCall(
+                    `${apiURL}${api_routes.tables}`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(newTable),
+                    }
+                );
+
+                setTables((prevTables) => [
+                    ...prevTables,
+                    { ...newTable, id: dataNewTable.id },
+                ]);
+            } catch (error) {
+                console.error('Error al actualizar tabla:', error);
+            }
+        },
+        [setTables]
+    );
+
+    return { tables, updateTable, loading, createTable };
 };
 
 export default useTables;

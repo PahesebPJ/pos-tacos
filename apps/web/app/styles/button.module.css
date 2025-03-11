@@ -1,0 +1,26 @@
+.button {
+    padding: 15px 35px;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background-color: var(--accentColor);
+    cursor: pointer;
+    color: var(--primaryColor);
+    font-weight: 700;
+    font-size: 1.2rem;
+    box-shadow: 3px 3px 10px rgb(0 0 0 / 0.2);
+    transition: all 0.3s ease;
+}
+
+/* .button:hover {
+    transform: translate(-2%, -4%);
+    box-shadow: 3px 3px 8px rgb(0 0 0 / 0.4);
+} */
+
+.float {
+    position: fixed;
+    bottom: 4%;
+    right: 4%;
+    transform: translate(-4%, -4%);
+    z-index: 80;
+}
