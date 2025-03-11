@@ -37,7 +37,7 @@ const TableStatic = ({ createTable }: propTableStatic) => {
             inputTable.current.focus();
         }
 
-        openModal();
+        openModal('modal');
     };
 
     const handlerForm = async (e: FormEvent<HTMLFormElement>) => {
@@ -46,6 +46,8 @@ const TableStatic = ({ createTable }: propTableStatic) => {
         try {
             inputTableValidation.parse(tableName);
         } catch (err: any) {
+            console.log(err);
+
             openPopUp({
                 text: 'Nombre demasiado corto',
                 visible: true,
@@ -98,11 +100,11 @@ const TableStatic = ({ createTable }: propTableStatic) => {
         >
             <h2 className={tableStyle.card_title_static}>Añade una mesa</h2>
             <BiAddToQueue className={tableStyle.card_icon__large} />
-            <Modal open={modal}>
+            <Modal idModal={modal} name="modal">
                 <Card
-                    close={closeModalTitle}
-                    isActiveModal={modal}
+                    isActiveModal={modal === 'modal'}
                     title="Crear mesa"
+                    close={closeModalTitle}
                 >
                     <form className={tableStyle.form} onSubmit={handlerForm}>
                         <input

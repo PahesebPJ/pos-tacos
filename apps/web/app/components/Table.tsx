@@ -29,15 +29,6 @@ interface tableInterface {
     status: number;
 }
 
-interface propsPopUp {
-    text: string;
-    icon?: React.ReactNode;
-    backGround?: string;
-    textColor?: string;
-    colorIcon?: string;
-    visible: boolean;
-}
-
 const Table = ({ id, name, href, status, updateTable }: propsDynamic) => {
     const { modal, openModal, closeModal } = useModal();
     const [tableName, setTableName] = useState('');
@@ -74,7 +65,7 @@ const Table = ({ id, name, href, status, updateTable }: propsDynamic) => {
         if (inputTable.current) {
             inputTable.current.focus();
         }
-        openModal();
+        openModal('modalTable');
     };
 
     const closeModalTitle = (e: React.MouseEvent) => {
@@ -90,6 +81,8 @@ const Table = ({ id, name, href, status, updateTable }: propsDynamic) => {
         try {
             inputTableValidation.parse(tableName);
         } catch (err: any) {
+            console.log(err);
+
             openPopUp({
                 text: 'Nombre demasiado corto',
                 visible: true,
@@ -178,10 +171,10 @@ const Table = ({ id, name, href, status, updateTable }: propsDynamic) => {
                 )}
             </Link>
 
-            <Modal open={modal}>
+            <Modal idModal={modal} name="modalTable">
                 <Card
                     close={closeModalTitle}
-                    isActiveModal={modal}
+                    isActiveModal={modal === 'modalTable'}
                     title="Cambiar nombre"
                 >
                     <form className={tableStyle.form} onSubmit={handlerForm}>
