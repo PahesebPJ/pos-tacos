@@ -1,0 +1,152 @@
+.card__container {
+  background-color: #fff;
+  max-width: 300px;
+  min-width: 15%;
+  min-height: 300px;
+  max-height: 340px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 3px 3px 6px rgb(0 0 0 / 0.1);
+}
+
+.card__image {
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 10px;
+}
+
+.card__body {
+  display: flex;
+  padding: 1rem;
+  flex-grow: 1;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.card__body__type__price {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.card__product__type {
+  font-size: 0.875rem;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.card__product__price {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.card__title {
+  font-size: large;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.card__description {
+  font-size: small;
+  color: #4b5563;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+}
+
+.card-custom {
+  transition: 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+.card__edit {
+  background-color: white;
+  box-shadow: 3px 3px 6px rgb(0 0 0 / 0.1);
+  color: #2c423f;
+  padding: 1rem;
+  border-radius: 1rem;
+  transition: opacity 1s 1s;
+  position: relative;
+  bottom: -4rem;
+  font-size: larger;
+  width: 100px;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-custom:hover .card__edit {
+  animation: show-data 1s forwards;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.card-custom:hover {
+  animation: remove-overflow 2s forwards;
+}
+
+.card__edit__icon__edit:hover {
+  color: #78c0e0;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.card__edit__icon__delete:hover {
+  color: #b80c09;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.card-custom:not(hover) {
+  animation: show-overflow 1.5s forwards;
+}
+
+.card-custom:not(hover) .card__edit {
+  animation: remove-data 1s forwards;
+}
+
+/*Animations*/
+@keyframes show-data {
+  50% {
+    transform: translateY(-4rem);
+  }
+  100% {
+    transform: translateY(-4rem);
+  }
+}
+
+@keyframes remove-overflow {
+  to {
+    overflow: initial;
+  }
+}
+
+@keyframes remove-data {
+  0% {
+    transform: translateY(-4rem);
+  }
+  50% {
+    transform: translateY(-5rem);
+  }
+  100% {
+    transform: translateY(0.5rem);
+  }
+}
+
+@keyframes show-overflow {
+  0% {
+    overflow: initial;
+    pointer-events: none;
+  }
+  50% {
+    overflow: hidden;
+  }
+}
