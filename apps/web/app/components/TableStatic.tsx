@@ -22,7 +22,6 @@ const TableStatic = ({ createTable }: propTableStatic) => {
     const { popup, openPopUp } = usePopUp(2500);
     const [tableName, setTableName] = useState('');
     const inputTable = useRef<HTMLInputElement | null>(null);
-    const [error, setError] = useState<string | null>(null);
 
     const closeModalTitle = (e: React.MouseEvent) => {
         e.stopPropagation();
@@ -38,7 +37,7 @@ const TableStatic = ({ createTable }: propTableStatic) => {
             inputTable.current.focus();
         }
 
-        openModal();
+        openModal('modal');
     };
 
     const handlerForm = async (e: FormEvent<HTMLFormElement>) => {
@@ -46,10 +45,17 @@ const TableStatic = ({ createTable }: propTableStatic) => {
 
         try {
             inputTableValidation.parse(tableName);
-            setError(null);
         } catch (err: any) {
-            setError(err.errors[0].message);
-            openPopUp('error');
+            console.log(err);
+
+            openPopUp({
+                text: 'Nombre demasiado corto',
+                visible: true,
+                backGround: '#e03b3b',
+                textColor: '#fff',
+                icon: <BiErrorCircle />,
+                colorIcon: '#fff',
+            });
             return;
         }
 
@@ -61,7 +67,15 @@ const TableStatic = ({ createTable }: propTableStatic) => {
         if (createTable) {
             try {
                 await createTable(newTable);
-                openPopUp('success');
+
+                openPopUp({
+                    text: `Nombre editado`,
+                    visible: true,
+                    backGround: '#19a051',
+                    textColor: '#fff',
+                    icon: <BiCheckCircle />,
+                    colorIcon: '#fff',
+                });
             } catch (error) {
                 console.error('Error creating table:', error);
             }
@@ -86,11 +100,11 @@ const TableStatic = ({ createTable }: propTableStatic) => {
         >
             <h2 className={tableStyle.card_title_static}>Añade una mesa</h2>
             <BiAddToQueue className={tableStyle.card_icon__large} />
-            <Modal open={modal}>
+            <Modal idModal={modal} name="modal">
                 <Card
-                    close={closeModalTitle}
-                    isActiveModal={modal}
+                    isActiveModal={modal === 'modal'}
                     title="Crear mesa"
+                    close={closeModalTitle}
                 >
                     <form className={tableStyle.form} onSubmit={handlerForm}>
                         <input
@@ -110,23 +124,12 @@ const TableStatic = ({ createTable }: propTableStatic) => {
             </Modal>
 
             <PopUp
-                text={`${error}`}
-                type="error"
-                popupId={popup}
-                icon={<BiErrorCircle />}
-                backGround="#e03b3b"
-                colorIcon="#fff"
-                textColor="#fff"
-            />
-
-            <PopUp
-                text={`Mesa creada`}
-                type="success"
-                popupId={popup}
-                icon={<BiCheckCircle />}
-                backGround="#19a051"
-                colorIcon="#fff"
-                textColor="#fff"
+                text={popup?.text as string}
+                visible={popup?.visible as boolean}
+                backGround={popup?.backGround}
+                textColor={popup?.textColor}
+                icon={popup?.icon}
+                colorIcon={popup?.colorIcon}
             />
         </div>
     );

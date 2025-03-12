@@ -1,5 +1,6 @@
 .popup {
     position: fixed;
+    opacity: 0;
     background-color: #fff;
     padding: 10px 20px;
     transform: translateY(100px);
@@ -9,14 +10,14 @@
     gap: 20px;
     margin: auto;
     z-index: 9999;
-    top: -200px;
+    top: -100px;
     left: 50%;
     transform: translateX(-50%);
     border-radius: 5px;
     box-shadow: 3px 3px 8px rgb(0 0 0 / 0.1);
-    /* pointer-events: none; */
+    pointer-events: none;
     max-width: 550px;
-    transition: top 0.3s cubic-bezier(0.47, 1.64, 0.41, 0.8);
+    transition: all 0.3s cubic-bezier(0.47, 1.64, 0.41, 0.8);
 }
 
 .text_center {
@@ -25,6 +26,7 @@
 
 .open {
     top: 30px;
+    opacity: 1;
 }
 
 .flex {

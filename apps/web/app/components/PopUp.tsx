@@ -8,8 +8,7 @@ interface propsPopUp {
     backGround?: string;
     textColor?: string;
     colorIcon?: string;
-    type: string;
-    popupId: string | null;
+    visible: boolean;
 }
 
 const PopUp = ({
@@ -18,8 +17,7 @@ const PopUp = ({
     backGround,
     textColor,
     colorIcon,
-    type,
-    popupId,
+    visible,
 }: propsPopUp) => {
     const popUpContainer = document.getElementById('popup');
 
@@ -28,7 +26,7 @@ const PopUp = ({
     return ReactDOM.createPortal(
         <div
             style={{ background: backGround }}
-            className={`${stylePopup.popup} ${type === popupId ? stylePopup.open : ''}`}
+            className={`${stylePopup.popup} ${visible ? stylePopup.open : ''}`}
         >
             <h1
                 style={{ color: textColor }}

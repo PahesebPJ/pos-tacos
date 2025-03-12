@@ -33,7 +33,6 @@ const Table = ({ id, name, href, status, updateTable }: propsDynamic) => {
     const { modal, openModal, closeModal } = useModal();
     const [tableName, setTableName] = useState('');
     const inputTable = useRef<HTMLInputElement | null>(null);
-    const [error, setError] = useState<string | null>(null);
     const { popup, openPopUp } = usePopUp(2500);
 
     let hrefStringOnly = '/error';
@@ -66,7 +65,7 @@ const Table = ({ id, name, href, status, updateTable }: propsDynamic) => {
         if (inputTable.current) {
             inputTable.current.focus();
         }
-        openModal();
+        openModal('modalTable');
     };
 
     const closeModalTitle = (e: React.MouseEvent) => {
@@ -81,10 +80,17 @@ const Table = ({ id, name, href, status, updateTable }: propsDynamic) => {
 
         try {
             inputTableValidation.parse(tableName);
-            setError(null);
         } catch (err: any) {
-            setError(err.errors[0].message);
-            openPopUp('error');
+            console.log(err);
+
+            openPopUp({
+                text: 'Nombre demasiado corto',
+                visible: true,
+                backGround: '#e03b3b',
+                textColor: '#fff',
+                icon: <BiErrorCircle />,
+                colorIcon: '#fff',
+            });
             return;
         }
 
@@ -96,7 +102,14 @@ const Table = ({ id, name, href, status, updateTable }: propsDynamic) => {
         if (updateTable) {
             try {
                 await updateTable(id as number, tableUpdated);
-                openPopUp('success');
+                openPopUp({
+                    text: `Nombre editado`,
+                    visible: true,
+                    backGround: '#19a051',
+                    textColor: '#fff',
+                    icon: <BiCheckCircle />,
+                    colorIcon: '#fff',
+                });
             } catch (error) {
                 console.error('Error updating table:', error);
             }
@@ -158,10 +171,10 @@ const Table = ({ id, name, href, status, updateTable }: propsDynamic) => {
                 )}
             </Link>
 
-            <Modal open={modal}>
+            <Modal idModal={modal} name="modalTable">
                 <Card
                     close={closeModalTitle}
-                    isActiveModal={modal}
+                    isActiveModal={modal === 'modalTable'}
                     title="Cambiar nombre"
                 >
                     <form className={tableStyle.form} onSubmit={handlerForm}>
@@ -182,23 +195,12 @@ const Table = ({ id, name, href, status, updateTable }: propsDynamic) => {
             </Modal>
 
             <PopUp
-                text={`${error}`}
-                popupId={popup}
-                type="error"
-                backGround="#e03b3b"
-                textColor="#fff"
-                icon={<BiErrorCircle />}
-                colorIcon="#fff"
-            />
-
-            <PopUp
-                text={`Nombre editado`}
-                popupId={popup}
-                type="success"
-                backGround="#19a051"
-                textColor="#fff"
-                icon={<BiCheckCircle />}
-                colorIcon="#fff"
+                text={popup?.text as string}
+                visible={popup?.visible as boolean}
+                backGround={popup?.backGround}
+                textColor={popup?.textColor}
+                icon={popup?.icon}
+                colorIcon={popup?.colorIcon}
             />
         </>
     );
