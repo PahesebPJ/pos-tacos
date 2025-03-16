@@ -33,13 +33,17 @@ export default function Home() {
                     ))}
             </section>
 
-            <Button onClick={openModal} isFloat={true} className={styles.hover}>
+            <Button
+                onClick={() => openModal('modal')}
+                isFloat={true}
+                className={styles.hover}
+            >
                 Corte
             </Button>
 
-            <Modal open={modal}>
+            <Modal idModal={modal} name="modal">
                 <Card
-                    isActiveModal={modal}
+                    isActiveModal={modal === 'modal'}
                     title="¿Seguro/a que quieres hacer corte?"
                     close={closeModal}
                 >

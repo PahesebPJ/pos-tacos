@@ -16,7 +16,6 @@ export class ProductsService {
     createProductDto: CreateProductRequestDto & { url?: string },
   ): Promise<Products> {
     const newProduct = this.productRepository.create(createProductDto);
-
     return this.productRepository.save({
       ...newProduct,
       url: createProductDto.url,
@@ -75,7 +74,7 @@ export class ProductsService {
 
     if (existedPic.toLocaleLowerCase() !== newPic?.toLocaleLowerCase()) {
       updatedProductDto = {
-        ...productFound,
+        ...updateProductDto,
         url: newPic,
       };
     }

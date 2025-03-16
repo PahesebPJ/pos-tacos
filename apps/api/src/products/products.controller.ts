@@ -30,7 +30,6 @@ const PHOTO_CONFIG = {
     filename: (req, file, cb) => {
       const originalName = file.originalname; // Get original filename
       const filePath = `./images/${originalName}`;
-
       // ✅ Check if a file with the same name already exists
       if (fs.existsSync(filePath)) {
         return cb(null, originalName); // Reuse the existing filename
@@ -72,7 +71,8 @@ export class ProductsController {
   ): Promise<Products> {
     return this.productsService.create({
       ...createProductDto,
-      url: getImageUrl(file),
+      url:
+        getImageUrl(file) === 'undefined' ? 'default.png' : getImageUrl(file),
     });
   }
 
@@ -98,7 +98,9 @@ export class ProductsController {
   ) {
     return this.productsService.update(+id, {
       ...updateProductDto,
-      url: getImageUrl(file),
+      url: updateProductDto?.url
+        ? updateProductDto.url?.split('/')[4]
+        : getImageUrl(file),
     });
   }
 
