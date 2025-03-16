@@ -1,0 +1,40 @@
+.table_container {
+    overflow-y: auto;
+    max-height: 600px;
+    width: 90%;
+    box-shadow: 3px 3px 3px rgb(0 0 0 / 0.2);
+}
+
+.table {
+    padding: 20px;
+    width: 100%;
+    text-align: center;
+    background-color: #fff;
+    border-collapse: collapse;
+
+    thead {
+        color: #fff;
+        background-color: var(--secondaryColor);
+        position: sticky;
+        top: 0;
+        z-index: 1;
+
+        tr {
+            th {
+                padding: 10px;
+                text-transform: capitalize;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            td {
+                padding: 15px;
+            }
+        }
+        tr:nth-child(even) {
+            background-color: #e2e2e2;
+        }
+    }
+}
