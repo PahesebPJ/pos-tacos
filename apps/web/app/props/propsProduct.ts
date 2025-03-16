@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface propsProduct {
     id?: number;
     name?: string;
@@ -5,4 +6,6 @@ export interface propsProduct {
     type?: string;
     price?: number;
     url?: string;
+    onDelete?: (id: number) => void;
+    onUpdate?: (...args: any[]) => any;
 }
