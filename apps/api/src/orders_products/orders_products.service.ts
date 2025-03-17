@@ -44,6 +44,23 @@ export class OrdersProductsService {
     end_date,
     order_id,
   }: GetCommandDto) {
+    //If no dates provided
+    if (!start_date || !end_date) {
+      const now = new Date();
+
+      //Start date
+      const defaultStartDate = new Date(now);
+      defaultStartDate.setHours(18, 0, 0, 0); //6PM today
+
+      //End date
+      const defaultEndDate = new Date(now);
+      defaultEndDate.setDate(defaultEndDate.getDate() + 1); //tomorrow
+      defaultEndDate.setHours(9, 0, 0, 0);
+
+      start_date = defaultStartDate.toISOString();
+      end_date = defaultEndDate.toISOString();
+    }
+
     const query = this.ordersProductsRepository
       .createQueryBuilder('op')
       .select([
@@ -62,10 +79,10 @@ export class OrdersProductsService {
 
     if (order_id) {
       query.where('op.id_order = :order_id', { order_id });
-    } else if (start_date && end_date) {
+    } else {
       query.where('o.date BETWEEN :startDate AND :endDate', {
-        start_date,
-        end_date,
+        startDate: start_date,
+        endDate: end_date,
       });
     }
 

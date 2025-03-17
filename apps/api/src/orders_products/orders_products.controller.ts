@@ -35,7 +35,7 @@ export class OrdersProductsController {
     return orderProduct;
   }
 
-  @Get('filter')
+  @Post('filter')
   async getCommandByDateOrId(@Body() query: GetCommandDto) {
     return this.ordersProductsService.getCommandByDateOrId(query);
   }
