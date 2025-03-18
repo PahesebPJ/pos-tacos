@@ -19,7 +19,7 @@ export class Orders {
   @Column()
   status: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: 'timestamptz' })
   date: Date;
 
   @Column()

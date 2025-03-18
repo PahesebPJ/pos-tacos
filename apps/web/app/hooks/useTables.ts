@@ -52,27 +52,6 @@ const useTables = () => {
         }
     };
 
-    /* const createTable = async (newTable: tableInterface) => {
-        try {
-            const dataNewTable = await getApiCall(
-                `${apiURL}${api_routes.tables}`,
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(newTable),
-                }
-            );
-
-            setTables((prevTables) => [
-                ...prevTables,
-                { ...newTable, id: dataNewTable.id },
-            ]);
-        } catch (error) {
-            console.error('Error al actualizar tabla:', error);
-        }
-    }; */
     const createTable = useCallback(
         async (newTable: tableInterface) => {
             try {
