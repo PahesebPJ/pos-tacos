@@ -39,6 +39,41 @@ export class OrdersProductsService {
     return await this.ordersProductsRepository.findOneBy({ id });
   }
 
+  /* private toLocalISOString(date: Date): string {
+    const offset = date.getTimezoneOffset();
+    const localDate = new Date(date.getTime() - offset * 60 * 1000);
+    return localDate.toISOString();
+  } */
+
+  private toLocalISOString(date: Date): string {
+    const offset = date.getTimezoneOffset();
+    const offsetSign = offset > 0 ? '-' : '+';
+    const offsetHours = String(Math.abs(Math.floor(offset / 60))).padStart(
+      2,
+      '0',
+    );
+    const offsetMinutes = String(Math.abs(offset % 60)).padStart(2, '0');
+    const localDate = new Date(date.getTime() - offset * 60 * 1000);
+    const isoString = localDate.toISOString();
+    return (
+      isoString.slice(0, -1) + offsetSign + offsetHours + ':' + offsetMinutes
+    );
+  }
+
+  private formatDateToLocal(date: Date): string {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      timeZoneName: 'short',
+    };
+
+    return date.toLocaleString('es-MX', options);
+  }
+
   async getCommandByDateOrId({
     start_date,
     end_date,
@@ -57,8 +92,12 @@ export class OrdersProductsService {
       defaultEndDate.setDate(defaultEndDate.getDate() + 1); //tomorrow
       defaultEndDate.setHours(9, 0, 0, 0);
 
-      start_date = defaultStartDate.toISOString();
-      end_date = defaultEndDate.toISOString();
+      // start_date = defaultStartDate.toISOString();
+      // end_date = defaultEndDate.toISOString();
+      start_date = this.toLocalISOString(defaultStartDate);
+      end_date = this.toLocalISOString(defaultEndDate);
+
+      console.log({ start_date, end_date });
     }
 
     const query = this.ordersProductsRepository
@@ -80,13 +119,20 @@ export class OrdersProductsService {
     if (order_id) {
       query.where('op.id_order = :order_id', { order_id });
     } else {
-      query.where('o.date BETWEEN :startDate AND :endDate', {
+      query.where('o.date::text BETWEEN :startDate AND :endDate', {
         startDate: start_date,
         endDate: end_date,
       });
     }
 
-    return query.getRawMany();
+    const results = await query.getRawMany();
+
+    const formattedResults = results.map((result) => ({
+      ...result,
+      o_date: this.formatDateToLocal(result.o_date),
+    }));
+
+    return formattedResults;
   }
 
   async create(createOrdersProductsDto: CreateOrdersProductsDto) {

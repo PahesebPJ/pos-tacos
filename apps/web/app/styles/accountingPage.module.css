@@ -1,27 +1,29 @@
 .container {
-  padding-top: 25px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
+    padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
 }
 
 .container_input {
-  position: absolute;
-  right: 30px;
-  bottom: 30px;
-  display: flex;
-  font-size: 2rem;
-  color: var(--secondaryColor);
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+    display: flex;
+    font-size: 2rem;
+    color: var(--secondaryColor);
 
-  input {
-    color: var(--accentColor);
-    padding: 0 10px;
-    text-align: end;
-    font-size: 1.7rem;
-    outline: none;
-    width: auto;
-    border: none;
-    border-bottom: 2px solid #333;
-  }
+    input {
+        color: var(--accentColor);
+        padding: 0 10px;
+        text-align: end;
+        font-size: 2.3rem;
+        outline: none;
+        width: auto;
+        border: none;
+        width: 320px;
+        max-width: 400px;
+        border-bottom: 2px solid #333;
+    }
 }
