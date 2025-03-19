@@ -92,12 +92,8 @@ export class OrdersProductsService {
       defaultEndDate.setDate(defaultEndDate.getDate() + 1); //tomorrow
       defaultEndDate.setHours(9, 0, 0, 0);
 
-      // start_date = defaultStartDate.toISOString();
-      // end_date = defaultEndDate.toISOString();
       start_date = this.toLocalISOString(defaultStartDate);
       end_date = this.toLocalISOString(defaultEndDate);
-
-      console.log({ start_date, end_date });
     }
 
     const query = this.ordersProductsRepository
@@ -112,14 +108,15 @@ export class OrdersProductsService {
         'op.discount',
         'op.quantity',
         'o.date',
+        't.name AS table',
       ])
       .leftJoin('op.order', 'o')
-      .leftJoin('op.product', 'p');
-
+      .leftJoin('op.product', 'p')
+      .leftJoin('o.tables', 't');
     if (order_id) {
       query.where('op.id_order = :order_id', { order_id });
     } else {
-      query.where('o.date::text BETWEEN :startDate AND :endDate', {
+      query.where('o.date BETWEEN :startDate AND :endDate', {
         startDate: start_date,
         endDate: end_date,
       });

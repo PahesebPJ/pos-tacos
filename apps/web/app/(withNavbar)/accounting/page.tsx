@@ -29,7 +29,7 @@ const dateFormated = (date: string) => {
     const amPm = separatedDate[2]?.split('/');
 
     if (monthsDaysYears) {
-        const dateEdit = `${monthsDaysYears[0]} de ${months[Number(monthsDaysYears[1])]} de ${monthsDaysYears[2]} ${hoursMinutesSeconds} ${amPm}`;
+        const dateEdit = `${monthsDaysYears[0]} de ${months[Number(monthsDaysYears[1]) - 1]} de ${monthsDaysYears[2]} ${hoursMinutesSeconds} ${amPm}`;
         return dateEdit;
     }
 };
@@ -37,7 +37,9 @@ const dateFormated = (date: string) => {
 const formatedData = (datas: any[]) => {
     const newDataFormated = [
         {
+            id: 0,
             idOrden: 0,
+            mesa: '',
             producto: '',
             fecha: '',
             descuento: 0,
@@ -49,7 +51,9 @@ const formatedData = (datas: any[]) => {
         const dateEdit = dateFormated(data.o_date);
         return {
             ...newDataFormated[0],
+            id: data.op_id,
             idOrden: data.id_order,
+            mesa: data.table,
             producto: data.p_name,
             descuento: data.op_discount,
             fecha: dateEdit,
