@@ -1,0 +1,28 @@
+.list_tables {
+    padding-bottom: 85px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.tonality {
+    background-color: var(--tonalityWhite);
+}
+
+.container_table {
+    width: 100%;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: start;
+    border-collapse: collapse;
+
+    thead {
+        tr {
+            th {
+                padding: 20px;
+                text-align: start;
+            }
+        }
+    }
+}
