@@ -1,11 +1,6 @@
-'use client';
-
-import React, { useState, useEffect } from 'react';
 import styles from '@/app/styles/accountingPage.module.css';
 import TableData from '@/app/components/TableData';
 import { apiURL, getApiCall } from '@/app/service/api_calls';
-
-// const tableHeads = ['Tilin', 'Mesa', 'Descuento', 'Fecha', 'Total'];
 
 const dateFormated = (date: string) => {
     const months = [
@@ -62,31 +57,18 @@ const formatedData = (datas: any[]) => {
     });
 };
 
-const Accounting = () => {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(false);
+const fetchData = async () => {
+    const dataTable = await getApiCall(`${apiURL}orders-products/filter`, {
+        method: 'POST',
+    });
+
+    return dataTable;
+};
+
+const Accounting = async () => {
     let total = 0;
 
-    useEffect(() => {
-        const setApiTables = async () => {
-            setLoading(true);
-
-            try {
-                const dataTable = await getApiCall(
-                    `${apiURL}orders-products/filter`,
-                    { method: 'POST' }
-                );
-
-                setData(dataTable);
-            } catch (error) {
-                console.error('Error al obtener datos iniciales:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        setApiTables();
-    }, []);
+    const data = await fetchData();
 
     const dataFormated = formatedData(data);
 
