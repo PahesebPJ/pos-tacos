@@ -3,7 +3,6 @@ import { Orders_Products } from 'src/orders_products/entities/orders_products.en
 import { Tables } from 'src/tables/entities/tables.entity';
 import {
   Column,
-  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -19,7 +18,11 @@ export class Orders {
   @Column()
   status: number;
 
-  @CreateDateColumn({ type: 'timestamptz' })
+  @Column({
+    type: 'timestamptz',
+    default: () => 'CURRENT_TIMESTAMP',
+    update: false,
+  })
   date: Date;
 
   @Column()
