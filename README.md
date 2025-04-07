@@ -1,4 +1,4 @@
-# 🚀 Postacos Project
+# 🚀🌮 Postacos Project
 
 TacoPOS is a sleek and efficient point-of-sale (POS) application designed for taco restaurants, food trucks, and taquerias. This app streamlines order management, enhances customer experience, and optimizes kitchen workflow.
 ---
