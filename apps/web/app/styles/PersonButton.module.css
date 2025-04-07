@@ -1,0 +1,16 @@
+.persons {
+    border: none;
+    outline: none;
+    padding: 10px 17px;
+    width: 180px;
+    min-width: 180px;
+    max-width: 180px;
+    cursor: pointer;
+    display: flex;
+    font-size: 1rem;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: rgba(230, 230, 230, 0.9);
+    border-radius: 15px;
+}

@@ -1,0 +1,118 @@
+:root {
+    --tonalityWhite: #f7f7f7;
+}
+
+/* Styles for elements in header */
+.navbar__logo {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    object-fit: cover;
+}
+
+.img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.link {
+    font-size: 1.5rem;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.link:hover {
+    background-color: var(--primaryColor);
+    color: var(--secondaryColor);
+}
+
+/* Styles for all body */
+
+.body {
+    display: grid;
+    position: relative;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+        'search search'
+        'persons persons'
+        'menu orders';
+    overflow-y: hidden;
+}
+
+.search {
+    grid-area: search;
+    padding: 20px 35px;
+}
+
+.container_search {
+    border: 1px solid #bbb;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    background-color: var(--tonalityWhite);
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.7rem;
+    color: #777;
+    box-shadow: 0 1px 5px rgb(0 0 0 / 0.1);
+
+    input {
+        border: none;
+        font-size: 1.7rem;
+        width: 100%;
+        outline: none;
+        background-color: transparent;
+    }
+}
+
+.menu {
+    position: relative;
+    grid-area: menu;
+    background-color: var(--tonalityWhite);
+    border-right: 1px solid #bbb;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: auto;
+
+    h2 {
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(3px);
+        z-index: 99;
+    }
+}
+
+.list_products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: 480px;
+    gap: 15px;
+    padding-top: 5px;
+    padding-bottom: 85px;
+}
+
+.orders {
+    position: relative;
+    grid-area: orders;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+    gap: 20px;
+    overflow-y: auto;
+
+    h2 {
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(3px);
+        z-index: 99;
+    }
+}

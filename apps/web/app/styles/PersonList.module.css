@@ -1,0 +1,15 @@
+.persons_container {
+    grid-area: persons;
+    background-color: var(--tonalityWhite);
+    padding: 20px 35px;
+    border-top: 1px solid #bbb;
+    border-bottom: 1px solid #bbb;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    overflow-x: auto;
+}
+
+.icon_size {
+    font-size: 1.5rem;
+}

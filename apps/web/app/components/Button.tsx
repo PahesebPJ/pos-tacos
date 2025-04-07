@@ -1,3 +1,5 @@
+'use client';
+
 import React, { ButtonHTMLAttributes } from 'react';
 import buttonStyle from '@/app/styles/button.module.css';
 

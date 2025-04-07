@@ -53,7 +53,13 @@ export default function Home() {
                         </Button>
                         <Button
                             onClick={closeModal}
-                            className={`${styles.no_background} ${styles.hover}`}
+                            className={styles.hover}
+                            style={{
+                                backgroundColor: 'transparent',
+                                color: '#888',
+                                border: '1px solid #ddd',
+                                boxShadow: 'none',
+                            }}
                         >
                             No
                         </Button>
