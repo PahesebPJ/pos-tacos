@@ -4,16 +4,18 @@ import Image from 'next/image';
 import { IoAddSharp } from 'react-icons/io5';
 
 type Props = {
-    id?: number;
-    name: string;
-    price: number;
-    type: string;
-    url: string;
+    id: number;
+    name: string | undefined;
+    price: number | undefined;
+    type: string | undefined;
+    url: string | undefined;
+    addToOrder: (productId: number, personId: number) => void;
+    selectedPersonId: number;
 };
 
-const ButtonProducts = ({ name, url, price, type }: Props) => {
+const ButtonProducts = ({ id, name, url, price, type, addToOrder, selectedPersonId }: Props) => {
     return (
-        <div className={styles.card_button}>
+        <div className={styles.card_button} onClick={() => addToOrder(id, selectedPersonId)}>
             <div className={styles.container_image}>
                 <Image
                     src={`${url}`}

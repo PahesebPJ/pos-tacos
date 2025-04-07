@@ -1,52 +1,42 @@
+/* eslint-disable react/prop-types */
 'use client';
 
-import React, { useContext, useState } from 'react';
-import { contextCounterPerson } from '@/app/context/PersonProvider';
 import styles from '@/app/styles/PersonList.module.css';
 import PersonButton from './PersonButton';
 import { IoAdd, IoPersonOutline } from 'react-icons/io5';
+import { PersonListProps } from '../props/PersonListProps';
 
-const PersonList = () => {
-    const context = useContext(contextCounterPerson);
-    const [selectedPerson, setSelectedPerson] = useState<number | null>(null);
-
-    if (!context) return;
-
-    const addPerson = () => {
-        const newPerson = context.counterPerson.length + 1;
-        context.setCounterPerson([...context.counterPerson, newPerson]);
-        setSelectedPerson(newPerson);
-    };
-
-    const handlePersonClick = (person: number) => {
-        setSelectedPerson(person);
-    };
-
+const PersonList: React.FC<PersonListProps> = ({
+    orders,
+    selectedPersonId,
+    onSelectPerson,
+    onAddPerson,
+}) => {
     return (
         <div className={styles.persons_container}>
-            <PersonButton onClick={addPerson}>
+            <PersonButton onClick={onAddPerson}>
                 <IoAdd className={styles.icon_size} />
                 Añadir Persona
             </PersonButton>
-
-            {context?.counterPerson.length > 0 &&
-                context?.counterPerson.map((person) => (
+            {
+                orders.map(order => 
                     <PersonButton
-                        onClick={() => handlePersonClick(person)}
-                        key={person}
+                        onClick={() => onSelectPerson(order.personId)}
+                        key={order.personId}
                         style={{
                             backgroundColor:
-                                person === selectedPerson
+                                order.personId === selectedPersonId
                                     ? '#d87a22'
                                     : 'rgba(230, 230, 230, 0.9)',
                             color:
-                                person === selectedPerson ? 'white' : 'black',
+                                order.personId === selectedPersonId ? 'white' : 'black',
                         }}
                     >
                         <IoPersonOutline style={{ fontSize: '1.2rem' }} />
-                        Persona {person}
+                        {order.personName}
                     </PersonButton>
-                ))}
+                )
+            }
         </div>
     );
 };
