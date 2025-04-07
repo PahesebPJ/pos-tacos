@@ -22,12 +22,17 @@ TacoPOS is a sleek and efficient point-of-sale (POS) application designed for ta
 ## 📦 Installation
 
 ```bash
+
+#Install docker image and setup DB
+
 # Clone the repo
-git clone https://github.com/your-username/your-project-name.git
-cd your-project-name
+git clone https://github.com/PahesebPJ/pos-tacos.git
+cd pos-tacos
 
 # Install dependencies
 npm install
 
 # Setup environment (create a .env file)
-cp .env.example .env
+
+# Run project
+npm run dev
